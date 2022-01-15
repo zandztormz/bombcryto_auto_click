@@ -24,7 +24,7 @@ while j < 999:
         login()
         login_metamask()
         go_to_work()
-
+    
     find_back_button()
     select_hero_to_work()
     click_to_work()

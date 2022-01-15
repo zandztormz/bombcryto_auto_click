@@ -7,6 +7,9 @@ pyautogui.FAILSAFE= True
 position_green_back_button_x = 0
 position_green_back_button_Y = 0
 
+position_select_hero_to_work_x = 0
+position_select_hero_to_work_Y = 0
+
 def go_to_work():
     print("Go to work")
     result_click_btn_work2 = None
@@ -81,30 +84,41 @@ def close_hero_list():
 
 def select_hero_to_work():
     print("select hero to start")
-    result_find_list_hero = None
-    while result_find_list_hero is None:
-        result_find_list_hero = pyautogui.locateOnScreen('images/list-hero.jpg', confidence=0.8)
-    x, y = pyautogui.center(result_find_list_hero)
-    print("Save position select_hero_to_work")
-    print(x,y)
-    pyautogui.click(x, y)
-    time.sleep(1)
+    t = 0
+    while t != 2:
+        result_find_list_hero = None
+        while result_find_list_hero is None:
+            time.sleep(1)
+            result_find_list_hero = pyautogui.locateOnScreen('images/list-hero.jpg')
+            x, y = pyautogui.center(result_find_list_hero)
+            position_select_hero_to_work_x = x
+            position_select_hero_to_work_Y = y
+            print("Save position select_hero_to_work")
+            print(x,y)
+            print(position_select_hero_to_work_x,position_select_hero_to_work_Y)
+            pyautogui.moveTo(position_select_hero_to_work_x,position_select_hero_to_work_Y)
+            pyautogui.click()
+            pyautogui.click()
+            t += 1
     
    
 def find_back_button():
     print("Process find green button back. Please wait...")
-    result_find_back_button = None
-    while result_find_back_button is None:
-        result_find_back_button = pyautogui.locateOnScreen('images/btn-back.jpg', confidence=0.8)
-    print("Found green back button")
-    x, y = pyautogui.center(result_find_back_button)
-    position_green_back_button_x = x
-    position_green_back_button_Y = y
-    print("Save position green back button")
-    print(x,y)
-    pyautogui.moveTo(x,y)
-    pyautogui.click()
-    pyautogui.click()
+    i = 0
+    while i != 2:
+        result_find_back_button = None
+        while result_find_back_button is None:
+            result_find_back_button = pyautogui.locateOnScreen('images/btn-back.jpg', confidence=0.8)
+            print("Found green back button")
+            x, y = pyautogui.center(result_find_back_button)
+            position_green_back_button_x = x
+            position_green_back_button_Y = y
+            print("Save position green back button")
+            print(x,y)
+            pyautogui.moveTo(position_green_back_button_x,position_green_back_button_Y)
+            pyautogui.click()
+            pyautogui.click()
+            i += 1
 
 def click_to_work():
     print("Process find work button ...")
