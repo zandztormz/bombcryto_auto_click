@@ -8,101 +8,82 @@ position_green_back_button_Y = 0
 position_select_hero_to_work_x = 0
 position_select_hero_to_work_Y = 0
 
-def go_to_work(config):
-    print("Go to work")
-    
-    for pos in pyautogui.locateAllOnScreen('images/'+ config['image'] +'/btn-start.jpg', confidence=0.99):
-        time.sleep(5)
-        result_find_timeout_button = pyautogui.locateOnScreen('images/'+ config['image'] +'/btn-timeout.jpg', confidence=0.8)
-        if result_find_timeout_button is not None: 
-            print("Login fail retry ...")
-            session_timeout()
-            login()
-            login_metamask()
-        x, y = pyautogui.center(pos)
-        pyautogui.click(x, y)
+def go_to_work(config, index, pos):
+    print('\33[33mfinding start button on screen '+ str(index) +'\33[0m')
+    btn_start = None
+    while btn_start is None:
+        btn_start = pyautogui.locateOnScreen('images/'+ config['image'] +'/btn-start.jpg', region=pos, confidence=0.8)
+    x, y = pyautogui.center(btn_start)
+    print('\33[32mfound start button on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
+    pyautogui.click(x,y)
+    print('click start button on screen '+ str(index) +'')
 
-def login_metamask(config):
-    print("Signin metamask")
-    for result_find_login_metamask_button in pyautogui.locateAllOnScreen('images/'+ config['image'] +'/btn-login-metamask.jpg', confidence=0.99):
-        time.sleep(5)
-        print("Found login metamask button")
-        x, y = pyautogui.center(result_find_login_metamask_button)
-        position_login_metamask_button_x = x
-        position_metamask_button_Y = y
-        print("Save position metamask_button button")
-        print(x,y)
-        pyautogui.moveTo(x,y)
-        pyautogui.doubleClick(x,y)
+def login_metamask(config, index, pos):
+    print('\33[33mfinding metamask button on screen '+ str(index) +'\33[0m')
+    screen_x, screen_y, width, height = pos
+    btn_metamask = None
+    while btn_metamask is None:
+        btn_metamask = pyautogui.locateOnScreen('images/'+ config['image'] +'/btn-login-metamask.jpg', region=(screen_x, screen_y, width, height + 200), confidence=0.99)
+    x, y = pyautogui.center(btn_metamask)
+    print('\33[32mfound metamask button on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
+    pyautogui.click(x,y)
+    print('click signin metamask on screen '+ str(index) +'')
 
-def login(config, nums):
-    time.sleep(5)
-    print("Login")
-    for pos in nums:
-        print("Found login button")
-        x, y = pyautogui.center(pos)
-        print("Save position login button")
-        print(x,y)
-        pyautogui.moveTo(x,y)
-        pyautogui.doubleClick(x,y)
-        print("Click login button")
+def login(config, index, pos):
+    find_if_login = None
+    while find_if_login is None:
+        find_if_login = pyautogui.locateOnScreen('images/'+ config['image'] +'/btn-login.png', region=pos)
+    x, y = pyautogui.center(find_if_login)
+    print('\33[32mfound login button on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
+    pyautogui.click(x,y,clicks=2, interval=0.25)
+    print('click login screen '+ str(index) +'')
 
-def session_timeout(config):
-    print("Session timeout go to login screen")
-    result_find_timeout_button = None
-    while result_find_timeout_button is None:
-        result_find_timeout_button = pyautogui.locateOnScreen('images/'+ config['image'] +'/btn-timeout.jpg', confidence=0.8)
-    x, y = pyautogui.center(result_find_timeout_button)
-    position_timeout_button_x = x
-    position_timeout_button_y = y
-    print("Save position timeout_button")
-    print(x,y)
-    pyautogui.moveTo(x,y)
-    pyautogui.click()
-    pyautogui.click()
+def session_timeout(config, index, pos):
+    find_btn_timeout = None
+    while find_btn_timeout is None:
+        find_btn_timeout = pyautogui.locateOnScreen('images/'+ config['image'] +'/btn-timeout.png', region=pos)
+    x, y = pyautogui.center(find_btn_timeout)
+    print('\33[32msession timeout '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
+    pyautogui.click(x,y)
+    print('click session timeout '+ str(index) +'')
 
-def close_hero_list(config):
-    print("close hero list")
+def close_hero_list(config, index, pos):
+    print('\33[33mfinding close hero button on screen '+ str(index) +'\33[0m')
     result_find_close_button = None
     while result_find_close_button is None:
-        result_find_close_button = pyautogui.locateOnScreen('images/'+ config['image'] +'/btn-close.jpg', confidence=0.8)
+        result_find_close_button = pyautogui.locateOnScreen('images/'+ config['image'] +'/btn-close.jpg', region=pos, confidence=0.8)
     x, y = pyautogui.center(result_find_close_button)
-    print("Save position close_hero_list")
-    print(x,y)
-    time.sleep(0.5)
-    pyautogui.click(x, y)
-    time.sleep(1)
-    pyautogui.click(x, y)
+    print('\33[32mfound close hero button on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
+    pyautogui.click(x,y)
+    print('click close hero button on screen '+ str(index) +'')
 
-def select_hero_to_work(config):
-    print("select hero to start")
-    for pos in pyautogui.locateAllOnScreen('images/'+ config['image'] +'/list-hero.jpg', confidence=0.8):
-        x, y =  pyautogui.center(pos)
-        print("Found list-hero button", pos)
-        print("Save position select_hero_to_work")
-        pyautogui.moveTo(x,y)
-        pyautogui.click()
-        pyautogui.click()
+def select_hero_to_work(config, index, pos):
+    print('\33[33mfinding list hero on screen '+ str(index) +'\33[0m')
+    btn_list_hero = None
+    while btn_list_hero is None:
+        btn_list_hero = pyautogui.locateOnScreen('images/'+ config['image'] +'/list-hero.jpg', region=pos, confidence=0.8)
+    x, y = pyautogui.center(btn_list_hero)
+    print('\33[32mfound list hero on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
+    pyautogui.click(x,y)
+    print('click green list hero screen '+ str(index) +'')
         
-def find_back_button(config):
-    print("Process find green button back. Please wait...")
-    for pos in pyautogui.locateAllOnScreen('images/'+ config['image'] +'/btn-back.jpg', confidence=0.8):
-        print("Found green back button")
-        x, y = pyautogui.center(pos)
-        print("Save position green back button")
-        print(x,y)
-        pyautogui.moveTo(x,y)
-        pyautogui.click()
-        pyautogui.click()
+def find_back_button(config, index, pos):
+    print('\33[33mfinding green back button on screen '+ str(index) +'\33[0m')
+    btn_back = None
+    while btn_back is None:
+        btn_back = pyautogui.locateOnScreen('images/'+ config['image'] +'/btn-back.jpg', region=pos, confidence=0.8)
+    x, y = pyautogui.center(btn_back)
+    print('\33[32mfound green back button on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
+    pyautogui.click(x,y,clicks=2, interval=0.25)
+    print('click green back button on screen '+ str(index) +'')
            
 
-def click_to_work(config):
-    print("Process find work button ...")
+def click_to_work(config, index, pos):
+    print('\33[33mfinding work button on screen '+ str(index) +'\33[0m')
     result_click_btn_work = None
     while result_click_btn_work is None:
-        result_click_btn_work = pyautogui.locateOnScreen('images/'+ config['image'] +'/btn-work.jpg', confidence=0.8)
-    print("Found work button !!")
+        result_click_btn_work = pyautogui.locateOnScreen('images/'+ config['image'] +'/btn-work.png', region=pos, confidence=0.4)
     x, y = pyautogui.center(result_click_btn_work)
-    time.sleep(3)
-    pyautogui.click(x, y)
-    print("click work button")
+    print('\33[32mfound work button on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
+    pyautogui.click(x,y,clicks=2, interval=0.25)
+    print('click work button on screen '+ str(index) +'')

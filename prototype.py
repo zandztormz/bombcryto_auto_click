@@ -8,44 +8,41 @@ import datetime
 from functions import go_to_work, login_metamask, login, session_timeout, close_hero_list, select_hero_to_work, find_back_button, click_to_work
 
 j = 0
-print(data_conf['default']['image'])
+
 print("Program bot for bormcrypto start")
 print("Open browser for program one by one")
 print("Keep all hero to rest")
 print("After open 'Treasure Hunt' page and wait for end process")
 cycle_time = input("Input cycle time (Min.): \n")
 cycle_time = int(cycle_time)
+screens = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/screen/login.png', confidence=0.99))
 
 while j < 999:
-    find_if_login = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/btn-login.png', confidence=0.99))
-    # find_if_login2 = pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/btn-login.png', confidence=0.8)
-    # print(find_if_login2)
-    # for m in pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/btn-login.png', confidence=0.99):
-    #     print(m)
-    # print(find_if_login)
-    if len(find_if_login) > 0:
-        print('Found Login Screen')
-        login(data_conf['default'], find_if_login)
-        login_metamask(data_conf['default'])
-        go_to_work(data_conf['default'])
-    # for pos in pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/btn-login.png', confidence=0.8):
-    #     print('Found Login')
-    #     login(data_conf['default'], pos)
-    #     login_metamask(data_conf['default'])
-    #     go_to_work(data_conf['default'])
+    i = 0
+    while i < len(screens):
+        m = screens[i]
+        screen_x, screen_y, width, height = m
+        print('found screen '+ str(i) +' at ', screen_x, screen_y, width, height)
+        print('\33[33mfinding login button on screen '+ str(i) +'\33[0m')
+        find_if_login = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/btn-login.png', region=m)
+        if find_if_login is not None:
+            login(config['default'], i, m)
+            login_metamask(config['default'], i, m)
+            go_to_work(config['default'], i, m)
 
-    # result_find_timeout_button = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/btn-timeout.jpg', confidence=0.8)
-    # if result_find_timeout_button is not None:
-    #     session_timeout(data_conf['default'])
-    #     login(data_conf['default'])
-    #     login_metamask(data_conf['default'])
-    #     go_to_work(data_conf['default'])
-    
-    # find_back_button(data_conf['default'])
-    # select_hero_to_work(data_conf['default'])
-    # click_to_work(data_conf['default'])
-    # close_hero_list(data_conf['default'])
-    # go_to_work(data_conf['default'])
+        result_find_timeout_button = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/btn-timeout.png', confidence=0.8, region=m)
+        if result_find_timeout_button is not None:
+            session_timeout(config['default'], i, m)
+            login(config['default'], i, m)
+            login_metamask(config['default'], i, m)
+            go_to_work(config['default'], i, m)
+
+        find_back_button(config['default'], i, m)
+        select_hero_to_work(config['default'], i, m)
+        click_to_work(config['default'], i, m)
+        close_hero_list(config['default'], i, m)
+        go_to_work(config['default'], i, m)
+        i +=1
 
     print("Program ready running re process in (Min)",cycle_time)
     now = datetime.datetime.now()
