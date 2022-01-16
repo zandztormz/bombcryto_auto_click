@@ -10,40 +10,41 @@ position_select_hero_to_work_Y = 0
 
 def go_to_work(config):
     print("Go to work")
-    result_click_btn_work2 = None
-    while result_click_btn_work2 is None:
+    
+    for pos in pyautogui.locateAllOnScreen('images/'+ config['image'] +'/btn-start.jpg', confidence=0.99):
+        time.sleep(5)
         result_find_timeout_button = pyautogui.locateOnScreen('images/'+ config['image'] +'/btn-timeout.jpg', confidence=0.8)
         if result_find_timeout_button is not None: 
             print("Login fail retry ...")
             session_timeout()
             login()
             login_metamask()
-        result_click_btn_work2 = pyautogui.locateOnScreen('images/'+ config['image'] +'/btn-start.jpg', confidence=0.8)
-    if result_click_btn_work2 is not None:
-        x, y = pyautogui.center(result_click_btn_work2)
+        x, y = pyautogui.center(pos)
         pyautogui.click(x, y)
 
 def login_metamask(config):
     print("Signin metamask")
-    time.sleep(5)
-    for result_find_login_metamask_button in pyautogui.locateAllOnScreen('images/'+ config['image'] +'/btn-login-metamask.jpg'):
+    for result_find_login_metamask_button in pyautogui.locateAllOnScreen('images/'+ config['image'] +'/btn-login-metamask.jpg', confidence=0.99):
+        time.sleep(5)
         print("Found login metamask button")
         x, y = pyautogui.center(result_find_login_metamask_button)
         position_login_metamask_button_x = x
         position_metamask_button_Y = y
         print("Save position metamask_button button")
         print(x,y)
-        # pyautogui.moveTo(x,y)
-        pyautogui.click(x,y)
+        pyautogui.moveTo(x,y)
+        pyautogui.doubleClick(x,y)
 
-def login(config):
+def login(config, nums):
+    time.sleep(5)
     print("Login")
-    for pos in pyautogui.locateAllOnScreen('images/'+ config['image'] +'/btn-login.png', confidence=0.8):
+    for pos in nums:
         print("Found login button")
         x, y = pyautogui.center(pos)
         print("Save position login button")
         print(x,y)
-        pyautogui.click(x,y)
+        pyautogui.moveTo(x,y)
+        pyautogui.doubleClick(x,y)
         print("Click login button")
 
 def session_timeout(config):
