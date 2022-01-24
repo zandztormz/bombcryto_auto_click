@@ -63,4 +63,5 @@ while j < 999:
     print("Program ready running re process in (Min)",cycle_time)
     now = datetime.datetime.now()
     print ("Start loop at ", now.strftime("%Y-%m-%d %H:%M:%S"))
-    time.sleep(60*cycle_time)
+    next_loop = now + datetime.timedelta(minutes=cycle_time)
+    print ("Next loop at ", next_loop)
