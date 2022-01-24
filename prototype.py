@@ -24,7 +24,7 @@ is_login = True
 #     is_login = True
 
 # screens = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/btn-back.jpg', confidence=0.85))
-screens = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/screen/screen.png', confidence=0.99))
+screens = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/screen/screen.png', confidence=0.90))
 print(screens)
 while j < 999:
     i = 0
@@ -54,9 +54,9 @@ while j < 999:
             go_to_work(i, (screen_x, screen_y, width, height ))
 
         find_back_button(i, (screen_x, screen_y, width, height ))
-        # select_hero_to_work(i, (screen_x, screen_y, width, height ))
-        # click_to_work(i, (screen_x, screen_y, width, height ))
-        # close_hero_list(i, (screen_x, screen_y, width, height ))
+        select_hero_to_work(i, (screen_x, screen_y, width, height ))
+        click_to_work(i, (screen_x, screen_y, width, height ))
+        close_hero_list(i, (screen_x, screen_y, width, height ))
         go_to_work(i, (screen_x, screen_y, width, height ))
         i +=1
 
