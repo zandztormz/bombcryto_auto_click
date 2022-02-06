@@ -1,6 +1,7 @@
 import pyautogui
 pyautogui.FAILSAFE= True
 import configparser
+import time
 config = configparser.ConfigParser()
 config.read('bomb.conf')
 data_conf = config
@@ -13,8 +14,21 @@ position_select_hero_to_work_Y = 0
 
 def go_to_work(index, pos):
     print('\33[33mfinding start button on screen '+ str(index) +'\33[0m')
+    # screen_x, screen_y, width, height = pos
+    # start = time.time()
     btn_start = None
     while btn_start is None:
+        # done = time.time()
+        # elapsed = done - start
+        # if elapsed > 7:
+        #     refresh_button = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/refresh.png', confidence=0.8, region=(screen_x, screen_y - 130, width, height))
+        #     x, y = pyautogui.center(refresh_button)
+        #     pyautogui.click(x,y)
+        #     login(index, pos)
+        #     login_metamask(index, pos)
+        #     elapsed = 0
+        #     done = None
+        #     print(elapsed)
         result_find_timeout_button = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/btn-timeout.png', confidence=0.8, region=pos)
         if result_find_timeout_button is not None:
             print("Login fail retrying")
@@ -90,9 +104,12 @@ def find_back_button(index, pos):
 def click_to_work(index, pos):
     print('\33[33mfinding work button on screen '+ str(index) +'\33[0m')
     result_click_btn_work = None
-    while result_click_btn_work is None:
-        result_click_btn_work = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/btn-work.png', region=pos, confidence=0.4)
-    x, y = pyautogui.center(result_click_btn_work)
-    print('\33[32mfound work button on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
-    pyautogui.click(x,y,clicks=2, interval=0.25)
-    print('click work button on screen '+ str(index) +'')
+    # while result_click_btn_work is None:
+    time.sleep(3)
+    result_click_btn_work = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/btn-work.png', region=pos, confidence=0.47)
+    if result_click_btn_work is not None:
+        x, y = pyautogui.center(result_click_btn_work)
+        print('\33[32mfound work button on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
+        time.sleep(2)
+        pyautogui.click(x,y,clicks=2, interval=0.25)
+        print('click work button on screen '+ str(index) +'')

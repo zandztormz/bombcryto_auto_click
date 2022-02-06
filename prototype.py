@@ -13,7 +13,8 @@ print("Program bot for bormcrypto start")
 print("Open browser for program one by one")
 print("Keep all hero to rest")
 print("After open 'Treasure Hunt' page and wait for end process")
-
+# result_click_btn_work = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/btn-work.png', confidence=0.47))
+# print('Goood', result_click_btn_work)
 cycle_time = input("Input cycle time (Min.): \n")
 cycle_time = int(cycle_time)
 is_login = True
@@ -64,4 +65,5 @@ while j < 999:
     now = datetime.datetime.now()
     print ("Start loop at ", now.strftime("%Y-%m-%d %H:%M:%S"))
     next_loop = now + datetime.timedelta(minutes=cycle_time)
-    print ("Next loop at ", next_loop)
+    print ("Next loop at ", next_loop.strftime("%Y-%m-%d %H:%M:%S"))
+    time.sleep(60*cycle_time)
