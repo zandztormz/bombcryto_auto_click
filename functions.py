@@ -34,6 +34,7 @@ def go_to_work(index, pos):
             print("Login fail retrying")
             session_timeout(index, pos)
             login(index, pos)
+            login_by_metamask(index, pos)
             login_metamask(index, pos)
         btn_start = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/btn-start.jpg', region=pos, confidence=0.8)
     x, y = pyautogui.center(btn_start)
@@ -46,7 +47,7 @@ def login_metamask(index, pos):
     screen_x, screen_y, width, height = pos
     btn_metamask = None
     while btn_metamask is None:
-        btn_metamask = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/btn-login-metamask.jpg', region=(screen_x, screen_y, width, height + 200), confidence=0.99)
+        btn_metamask = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/btn-login-metamask.jpg', region=(screen_x, screen_y, width, height + 250), confidence=0.99)
     x, y = pyautogui.center(btn_metamask)
     print('\33[32mfound metamask button on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
     pyautogui.click(x,y)
@@ -61,6 +62,15 @@ def login(index, pos):
     pyautogui.click(x,y,clicks=2, interval=0.25)
     print('click login screen '+ str(index) +'')
 
+def login_by_metamask(index, pos):
+    btn_connect_metamask = None
+    while btn_connect_metamask is None:
+        btn_connect_metamask = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/connect-metamask.png', region=pos,confidence=0.8)
+    x, y = pyautogui.center(btn_connect_metamask)
+    print('\33[32mfound btn_connect_metamask button on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
+    pyautogui.click(x,y)
+    print('click btn_connect_metamask screen '+ str(index) +'')
+
 def session_timeout(index, pos):
     find_btn_timeout = None
     while find_btn_timeout is None:
@@ -74,7 +84,7 @@ def close_hero_list(index, pos):
     print('\33[33mfinding close hero button on screen '+ str(index) +'\33[0m')
     result_find_close_button = None
     while result_find_close_button is None:
-        result_find_close_button = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/btn-close.jpg', region=pos, confidence=0.8)
+        result_find_close_button = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/btn-close.png', region=pos, confidence=0.83)
     x, y = pyautogui.center(result_find_close_button)
     print('\33[32mfound close hero button on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
     pyautogui.click(x,y)
@@ -84,7 +94,7 @@ def select_hero_to_work(index, pos):
     print('\33[33mfinding list hero on screen '+ str(index) +'\33[0m')
     btn_list_hero = None
     while btn_list_hero is None:
-        btn_list_hero = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/list-hero.jpg', region=pos, confidence=0.8)
+        btn_list_hero = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/list-hero.jpg', region=pos, confidence=0.7)
     x, y = pyautogui.center(btn_list_hero)
     print('\33[32mfound list hero on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
     pyautogui.click(x,y)
@@ -103,13 +113,13 @@ def find_back_button(index, pos):
 
 def click_to_work(index, pos):
     print('\33[33mfinding work button on screen '+ str(index) +'\33[0m')
+    time.sleep(2)
     result_click_btn_work = None
-    # while result_click_btn_work is None:
-    time.sleep(3)
-    result_click_btn_work = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/btn-work.png', region=pos, confidence=0.47)
-    if result_click_btn_work is not None:
-        x, y = pyautogui.center(result_click_btn_work)
-        print('\33[32mfound work button on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
-        time.sleep(2)
-        pyautogui.click(x,y,clicks=2, interval=0.25)
-        print('click work button on screen '+ str(index) +'')
+    while result_click_btn_work is None:
+    # time.sleep(3)
+        result_click_btn_work = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/btn-work.png', region=pos)
+    # if result_click_btn_work is not None:
+    x, y = pyautogui.center(result_click_btn_work)
+    print('\33[32mfound work button on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
+    pyautogui.click(x,y)
+    print('click work button on screen '+ str(index) +'')

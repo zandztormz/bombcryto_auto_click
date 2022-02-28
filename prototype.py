@@ -5,7 +5,7 @@ config.read('bomb.conf')
 data_conf = config
 import time
 import datetime
-from functions import go_to_work, login_metamask, login, session_timeout, close_hero_list, select_hero_to_work, find_back_button, click_to_work
+from functions import go_to_work, login_metamask, login, session_timeout, close_hero_list, select_hero_to_work, find_back_button, click_to_work, login_by_metamask
 
 j = 0
 
@@ -13,8 +13,9 @@ print("Program bot for bormcrypto start")
 print("Open browser for program one by one")
 print("Keep all hero to rest")
 print("After open 'Treasure Hunt' page and wait for end process")
-# result_click_btn_work = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/btn-work.png', confidence=0.47))
-# print('Goood', result_click_btn_work)
+result_find_close_button = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/screen/screen.png', confidence=0.95))
+# result_find_close_button = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/btn-work.png', confidence=0.95))
+print(result_find_close_button)
 cycle_time = input("Input cycle time (Min.): \n")
 cycle_time = int(cycle_time)
 is_login = True
@@ -25,7 +26,7 @@ is_login = True
 #     is_login = True
 
 # screens = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/btn-back.jpg', confidence=0.85))
-screens = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/screen/screen.png', confidence=0.90))
+screens = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/screen/screen.png', confidence=0.95))
 print(screens)
 while j < 999:
     i = 0
@@ -37,6 +38,7 @@ while j < 999:
         find_if_login = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/btn-login.png', region=(screen_x, screen_y, width, height ))
         if find_if_login is not None:
             login(i, (screen_x, screen_y, width, height ))
+            login_by_metamask(i, (screen_x, screen_y, width, height ))
             login_metamask(i, (screen_x, screen_y, width, height ))
             go_to_work(i, (screen_x, screen_y, width, height ))
 
@@ -51,8 +53,13 @@ while j < 999:
         if result_find_timeout_button is not None:
             session_timeout(i, (screen_x, screen_y, width, height ))
             login(i, (screen_x, screen_y, width, height ))
+            login_by_metamask(i, (screen_x, screen_y, width, height ))
             login_metamask(i, (screen_x, screen_y, width, height ))
             go_to_work(i, (screen_x, screen_y, width, height ))
+
+        # result_find_go_to_work = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/btn-start.jpg', confidence=0.8, region=(screen_x, screen_y, width, height ))
+        # if result_find_go_to_work is not None:
+        #     go_to_work(i, (screen_x, screen_y, width, height ))
 
         find_back_button(i, (screen_x, screen_y, width, height ))
         select_hero_to_work(i, (screen_x, screen_y, width, height ))
