@@ -13,8 +13,8 @@ print("Program bot for bormcrypto start")
 print("Open browser for program one by one")
 print("Keep all hero to rest")
 print("After open 'Treasure Hunt' page and wait for end process")
-result_find_close_button = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/screen/screen.png', confidence=0.95))
-# result_find_close_button = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/btn-work.png', confidence=0.95))
+# result_find_close_button = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/screen/screen2.png', confidence=0.85))
+result_find_close_button = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/btn-login.png'))
 print(result_find_close_button)
 cycle_time = input("Input cycle time (Min.): \n")
 cycle_time = int(cycle_time)
@@ -26,15 +26,18 @@ is_login = True
 #     is_login = True
 
 # screens = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/btn-back.jpg', confidence=0.85))
-screens = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/screen/screen.png', confidence=0.95))
+screens = list(pyautogui.locateAllOnScreen('images/'+ config['default']['image'] +'/screen/screen2.png', confidence=0.85))
 print(screens)
 while j < 999:
     i = 0
     while i < len(screens):
         m = screens[i]
         screen_x, screen_y, width, height = m
-        width = width + 485
-        height = height + 309
+        screen_x = 0
+        width = 500
+        height = height + 325
+        # width = width + 485
+        # height = height + 309
         find_if_login = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/btn-login.png', region=(screen_x, screen_y, width, height ))
         if find_if_login is not None:
             login(i, (screen_x, screen_y, width, height ))

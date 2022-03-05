@@ -5,7 +5,7 @@ import time
 config = configparser.ConfigParser()
 config.read('bomb.conf')
 data_conf = config
-
+timeout_config = 3
 position_green_back_button_x = 0
 position_green_back_button_Y = 0
 
@@ -14,10 +14,11 @@ position_select_hero_to_work_Y = 0
 
 def go_to_work(index, pos):
     print('\33[33mfinding start button on screen '+ str(index) +'\33[0m')
-    # screen_x, screen_y, width, height = pos
-    # start = time.time()
+    timeout = time.time() + timeout_config
     btn_start = None
     while btn_start is None:
+        # if time.time() > timeout:
+        #     break
         # done = time.time()
         # elapsed = done - start
         # if elapsed > 7:
@@ -37,10 +38,11 @@ def go_to_work(index, pos):
             login_by_metamask(index, pos)
             login_metamask(index, pos)
         btn_start = pyautogui.locateOnScreen('images/'+ config['default']['image'] +'/btn-start.jpg', region=pos, confidence=0.8)
-    x, y = pyautogui.center(btn_start)
-    print('\33[32mfound start button on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
-    pyautogui.click(x,y)
-    print('click start button on screen '+ str(index) +'')
+    if btn_start is not None:
+        x, y = pyautogui.center(btn_start)
+        print('\33[32mfound start button on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
+        pyautogui.click(x,y)
+        print('click start button on screen '+ str(index) +'')
 
 def login_metamask(index, pos):
     print('\33[33mfinding metamask button on screen '+ str(index) +'\33[0m')
@@ -121,5 +123,5 @@ def click_to_work(index, pos):
     # if result_click_btn_work is not None:
     x, y = pyautogui.center(result_click_btn_work)
     print('\33[32mfound work button on screen '+ str(index) +' x='+ str(x) +' y='+ str(y) +'\33[0m')
-    pyautogui.click(x,y)
+    pyautogui.doubleClick(x,y)
     print('click work button on screen '+ str(index) +'')
